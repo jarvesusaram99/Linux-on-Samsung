@@ -14,13 +14,15 @@
 #  Author: Tech Jarves
 #  YouTube: https://youtube.com/@TechJarves
 #######################################################
-
+# Ensure the script is interactive even when piped (e.g., curl | bash)
+if [ ! -t 0 ]; then
+    exec < /dev/tty
+fi
 # ============== CONFIGURATION ==============
 TOTAL_STEPS=13
 CURRENT_STEP=0
 DE_CHOICE="1"
 DE_NAME="XFCE4"
-
 # ============== COLORS ==============
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -32,7 +34,6 @@ WHITE='\033[1;37m'
 GRAY='\033[0;90m'
 NC='\033[0m'
 BOLD='\033[1m'
-
 # ============== PROGRESS FUNCTIONS ==============
 update_progress() {
     CURRENT_STEP=$((CURRENT_STEP + 1))
@@ -53,7 +54,6 @@ update_progress() {
     echo -e "${WHITE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
 }
-
 spinner() {
     local pid=$1
     local message=$2
@@ -77,20 +77,17 @@ spinner() {
     
     return $exit_code
 }
-
 install_pkg() {
     local pkg=$1
     local name=${2:-$pkg}
     (yes | pkg install $pkg -y > /dev/null 2>&1) &
     spinner $! "Installing ${name}..."
 }
-
 # ============== BANNER ==============
 show_banner() {
     clear
     echo -e "${CYAN}"
     cat << 'BANNER'
-
     ╔══════════════════════════════════════════════╗
     ║                                              ║
     ║     🚀  SAMSUNG MOBILE HACKLAB v3.0  🚀      ║
@@ -98,14 +95,12 @@ show_banner() {
     ║     Optimized for Samsung Galaxy Devices     ║
     ║                                              ║
     ╚══════════════════════════════════════════════╝
-
 BANNER
     echo -e "${NC}"
     echo -e "${WHITE}            Tech Jarves - YouTube${NC}"
     echo -e "${GRAY}        https://youtube.com/@TechJarves${NC}"
     echo ""
 }
-
 # ============== SAMSUNG DEVICE DETECTION ==============
 detect_samsung() {
     echo -e "${PURPLE}[*] Detecting Samsung device...${NC}"
@@ -143,7 +138,6 @@ detect_samsung() {
     echo ""
     sleep 1
 }
-
 # ============== DESKTOP ENVIRONMENT SELECTION ==============
 choose_desktop() {
     echo -e "${CYAN}📺 Choose your Desktop Environment:${NC}"
@@ -160,7 +154,7 @@ choose_desktop() {
     fi
     
     while true; do
-        read -p "  Enter number (1-4) [default: 1]: " DE_INPUT < /dev/tty
+        read -p "  Enter number (1-4) [default: 1]: " DE_INPUT
         DE_INPUT=${DE_INPUT:-1}
         if [[ "$DE_INPUT" =~ ^[1-4]$ ]]; then
             DE_CHOICE="$DE_INPUT"
@@ -182,7 +176,6 @@ choose_desktop() {
     echo ""
     sleep 1
 }
-
 # ============== STEP 1: UPDATE SYSTEM ==============
 step_update() {
     update_progress
@@ -195,7 +188,6 @@ step_update() {
     (yes | pkg upgrade -y > /dev/null 2>&1) &
     spinner $! "Upgrading installed packages..."
 }
-
 # ============== STEP 2: INSTALL REPOSITORIES ==============
 step_repos() {
     update_progress
@@ -205,7 +197,6 @@ step_repos() {
     install_pkg "x11-repo" "X11 Repository"
     install_pkg "tur-repo" "TUR Repository (Firefox, VS Code)"
 }
-
 # ============== STEP 3: INSTALL TERMUX-X11 ==============
 step_x11() {
     update_progress
@@ -215,7 +206,6 @@ step_x11() {
     install_pkg "termux-x11-nightly" "Termux-X11 Display Server"
     install_pkg "xorg-xrandr" "XRandR (Display Settings)"
 }
-
 # ============== STEP 4: INSTALL DESKTOP ENVIRONMENT ==============
 step_desktop() {
     update_progress
@@ -245,7 +235,6 @@ step_desktop() {
         install_pkg "dolphin" "Dolphin File Manager"
     fi
 }
-
 # ============== STEP 5: INSTALL GPU DRIVERS ==============
 step_gpu() {
     update_progress
@@ -264,7 +253,6 @@ step_gpu() {
     
     echo -e "  ${GREEN}✓${NC} GPU acceleration configured for Samsung!"
 }
-
 # ============== STEP 6: INSTALL AUDIO ==============
 step_audio() {
     update_progress
@@ -273,7 +261,6 @@ step_audio() {
     
     install_pkg "pulseaudio" "PulseAudio Sound Server"
 }
-
 # ============== STEP 7: INSTALL BROWSERS & DEV APPS ==============
 step_apps() {
     update_progress
@@ -287,7 +274,6 @@ step_apps() {
     install_pkg "wget" "Wget Downloader"
     install_pkg "curl" "cURL"
 }
-
 # ============== STEP 8: INSTALL PYTHON & FLASK ==============
 step_python() {
     update_progress
@@ -304,7 +290,6 @@ step_python() {
     cat > ~/demo_python/app.py << 'PYEOF'
 from flask import Flask, render_template_string
 app = Flask(__name__)
-
 @app.route("/")
 def hello():
     return render_template_string("""
@@ -316,13 +301,11 @@ def hello():
         </body>
     </html>
     """)
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 PYEOF
     echo -e "  ${GREEN}✓${NC} Python Flask demo created in ~/demo_python"
 }
-
 # ============== STEP 9: INSTALL METASPLOIT ==============
 step_metasploit() {
     update_progress
@@ -337,7 +320,6 @@ step_metasploit() {
     (msfdb init > /dev/null 2>&1) &
     spinner $! "Initializing Metasploit database..."
 }
-
 # ============== STEP 12: INSTALL WINE (WINDOWS APPS) ==============
 step_wine() {
     update_progress
@@ -360,7 +342,6 @@ step_wine() {
     wine reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v FontSmoothing /t REG_SZ /d 2 /f > /dev/null 2>&1
     echo -e "  ${GREEN}✓${NC} Wine configured"
 }
-
 # ============== STEP 13: CREATE LAUNCHER SCRIPTS ==============
 step_launchers() {
     update_progress
@@ -395,7 +376,6 @@ export TU_DEBUG=noconform
 export MESA_VK_WSI_PRESENT_MODE=immediate
 export ZINK_DESCRIPTORS=lazy
 GPUEOF
-
     if [ "$DE_CHOICE" == "4" ]; then
         echo "export KWIN_COMPOSE=O2ES" >> ~/.config/hacklab-gpu.sh
     else
@@ -451,16 +431,13 @@ PLANKEOF
 echo ""
 echo "🚀 Starting Samsung Mobile HackLab (${DE_NAME})..."
 echo ""
-
 # Load GPU config
 source ~/.config/hacklab-gpu.sh 2>/dev/null
-
 # Kill any existing sessions
 echo "🔄 Cleaning up old sessions..."
 pkill -9 -f "termux.x11" 2>/dev/null
 ${KILL_CMD} 2>/dev/null
 pkill -9 -f "dbus" 2>/dev/null
-
 # === AUDIO SETUP ===
 unset PULSE_SERVER
 pulseaudio --kill 2>/dev/null
@@ -470,13 +447,11 @@ pulseaudio --start --exit-idle-time=-1
 sleep 1
 pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 2>/dev/null
 export PULSE_SERVER=127.0.0.1
-
 # === START X11 ===
 echo "📺 Starting X11 display server..."
 termux-x11 :0 -ac &
 sleep 3
 export DISPLAY=:0
-
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "  📱 Open the Termux-X11 app to see desktop!"
@@ -484,7 +459,6 @@ echo "  🔊 Audio is enabled!"
 echo "  🎮 GPU acceleration is active!"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-
 ${EXEC_CMD}
 LAUNCHEREOF
     chmod +x ~/start-hacklab.sh
@@ -553,7 +527,6 @@ STOPEOF
     chmod +x ~/stop-hacklab.sh
     echo -e "  ${GREEN}✓${NC} Created ~/stop-hacklab.sh"
 }
-
 # ============== STEP 14: CREATE DESKTOP SHORTCUTS ==============
 step_shortcuts() {
     update_progress
@@ -650,7 +623,6 @@ EOF
     chmod +x ~/Desktop/*.desktop 2>/dev/null
     echo -e "  ${GREEN}✓${NC} Desktop shortcuts created"
 }
-
 # ============== STEP 15: FINAL CONFIGURATION ==============
 step_finalize() {
     update_progress
@@ -665,13 +637,11 @@ step_finalize() {
     
     echo -e "  ${GREEN}✓${NC} Configuration complete!"
 }
-
 # ============== COMPLETION SCREEN ==============
 show_completion() {
     echo ""
     echo -e "${GREEN}"
     cat << 'COMPLETE'
-
     ╔═══════════════════════════════════════════════════════════════╗
     ║                                                               ║
     ║         ✅  INSTALLATION COMPLETE!  ✅                        ║
@@ -679,7 +649,6 @@ show_completion() {
     ║              🎉 100% - All Done! 🎉                           ║
     ║                                                               ║
     ╚═══════════════════════════════════════════════════════════════╝
-
 COMPLETE
     echo -e "${NC}"
     
@@ -723,7 +692,6 @@ COMPLETE
     echo -e "${WHITE}⚡ TIP: Open Termux-X11 app first, then run start-hacklab.sh${NC}"
     echo ""
 }
-
 # ============== MAIN INSTALLATION ==============
 main() {
     show_banner
@@ -734,7 +702,7 @@ main() {
     echo -e "${GRAY}  Estimated time: 20-40 minutes (depends on internet speed)${NC}"
     echo ""
     echo -e "${YELLOW}  Press Enter to start installation, or Ctrl+C to cancel...${NC}"
-    read < /dev/tty
+    read
     
     detect_samsung
     choose_desktop
@@ -755,6 +723,5 @@ main() {
     
     show_completion
 }
-
 # ============== RUN ==============
 main
