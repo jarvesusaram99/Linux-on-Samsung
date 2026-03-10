@@ -154,7 +154,7 @@ choose_desktop() {
     fi
     
     while true; do
-        read -p "  Enter number (1-4) [default: 1]: " DE_INPUT
+        read -p "  Enter number (1-4) [default: 1]: " DE_INPUT < /dev/tty
         DE_INPUT=${DE_INPUT:-1}
         if [[ "$DE_INPUT" =~ ^[1-4]$ ]]; then
             DE_CHOICE="$DE_INPUT"
@@ -702,7 +702,7 @@ main() {
     echo -e "${GRAY}  Estimated time: 20-40 minutes (depends on internet speed)${NC}"
     echo ""
     echo -e "${YELLOW}  Press Enter to start installation, or Ctrl+C to cancel...${NC}"
-    read
+    read < /dev/tty
     
     detect_samsung
     choose_desktop
