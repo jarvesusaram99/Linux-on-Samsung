@@ -26,14 +26,14 @@ A script to convert your Samsung Galaxy device into a Linux desktop environment 
 Run this single command inside your Termux terminal:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/setup-hacklab.sh | bash
+curl -fsSL https://raw.githubusercontent.com/jarvesusaram99/Linux-on-Samsung/main/setup-hacklab.sh | bash
 ```
 
 Alternatively, you can clone the repository and run it manually:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
+git clone https://github.com/jarvesusaram99/Linux-on-Samsung.git
+cd Linux-on-Samsung
 chmod +x setup-hacklab.sh
 ./setup-hacklab.sh
 ```
