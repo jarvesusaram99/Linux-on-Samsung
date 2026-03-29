@@ -1,35 +1,37 @@
-# Samsung Mobile HackLab
+# Run Linux on Samsung
 
-A script to convert your Samsung Galaxy device into a Linux desktop environment within Termux. It installs your choice of desktop, configures GPU acceleration (optimizing for Snapdragon/Adreno), and sets up essential development and security tools.
+Transform your **Samsung Galaxy** smartphone or tablet into a fully functional, GPU-accelerated **Linux Desktop setup** using Termux! This automated script installs your choice of Desktop Environment (XFCE4, LXQt, MATE, or KDE Plasma), configures Turnip/Zink drivers for Snapdragon hardware acceleration, and gears you up with essential development and security tools.
 
-**Created by**: [Tech Jarves](https://youtube.com/techjarves)
+**Created by**: [Tech Jarves](https://youtube.com/techjarves) – *Subscribe on YouTube for full tutorials!*
 
-## Features
+## 🚀 Key Features
 
-- **Desktop Environments**: Choose between XFCE4, LXQt, MATE, or KDE Plasma.
-- **Hardware Acceleration**: Automatically configures Turnip/Zink for Snapdragon devices (Exynos devices fall back to software rendering).
-- **Core Tools Installed**:
-  - **Security**: Metasploit Framework
-  - **Development**: Python 3, Flask, VS Code (code-oss), Git
-  - **Internet & Media**: Firefox, VLC Player 
-  - **Windows Compatibility**: Wine and Box64 via Hangover
+- **Multiple Desktop Environments**: Choose between and seamlessly switch among XFCE4, LXQt, MATE, and KDE Plasma.
+- **Hardware GPU Acceleration**: Automatically configures the Turnip & Zink Vulkan drivers to unlock maximum performance on Snapdragon / Adreno devices (Exynos processors will safely fall back to software rendering).
+- **Core Security & Linux Tools**: Metasploit Framework comes pre-installed for authorized security testing.
+- **Development Ready**: Python 3, Flask, VS Code (code-oss), and Git are pre-configured out-of-the-box.
+- **Windows App Compatibility**: Run `x86_64` Windows applications flawlessly using Wine and Box64 via Hangover.
 
-## Prerequisites
+## 📱 Prerequisites
 
-1. **Samsung Galaxy** device (Android 10+)
-2. **Termux**: Must be installed from [F-Droid](https://f-droid.org/en/packages/com.termux/), not the Google Play Store (the Play Store version is obsolete).
-3. **Termux-X11**: Required to display the desktop environment. Install the APK from their [GitHub Releases](https://github.com/termux/termux-x11/releases).
-4. Approx. 3-4 GB of free storage.
+1. **Samsung Galaxy** device running Android 10 or higher.
+2. **Termux**: Download the official version from [F-Droid](https://f-droid.org/en/packages/com.termux/). *(Do not use the Google Play Store version as it is obsolete).*
+3. **Termux-X11**: Required to render the Linux display. Download the latest APK from the [Termux-X11 GitHub Releases](https://github.com/termux/termux-x11/releases).
+4. **Storage**: Approximately 3-4 GB of free internal space.
 
-## Installation
+## ⚙️ Installation Guide
 
-Run this single command inside your Termux terminal:
+Choose one of the following methods to install your Linux environment inside Termux.
+
+### Method 1: One-Click Automated Install (Recommended)
+Run this single command inside your Termux terminal to fetch and execute the setup:
 
 ```bash
 apt update && apt upgrade -y && apt install curl -y && curl -fsSL https://raw.githubusercontent.com/jarvesusaram99/Linux-on-Samsung/main/setup-hacklab.sh | bash
 ```
 
-Alternatively, you can clone the repository and run it manually:
+### Method 2: Manual Clone Setup
+Alternatively, if you prefer cloning the repository directly:
 
 ```bash
 apt update && apt upgrade -y
@@ -40,27 +42,35 @@ chmod +x setup-hacklab.sh
 ./setup-hacklab.sh
 ```
 
-## Usage
+## 🖥️ How to Use Your Linux Desktop
 
-After installation, the script creates helper shortcuts in your home directory:
+After a successful installation, our smart launcher is placed in your home directory.
 
-- **Start the Desktop**: `./start-hacklab.sh` (Make sure the Termux-X11 app is open)
-- **Open Quick Tools Menu**: `./hacktools.sh`
-- **Stop the Desktop**: `./stop-hacklab.sh`
+1. Keep the **Termux-X11** Android app open in the background.
+2. Inside Termux, start your visual desktop with:
+   ```bash
+   ./start-hacklab.sh
+   ```
+   *(If you installed multiple desktop environments, you will automatically be prompted to choose which one to boot!)*
+3. **Quick Tools Menu**: Access your terminal tools quickly by running: `./hacktools.sh`
+4. **Stop the Desktop**: Safely terminate all Linux GUI sessions by running: `./stop-hacklab.sh`
 
-### Running the Python Demo
-A sample Flask application is included to test your environment:
+### Testing Your Server Environment (Python Flask)
+A lightweight web application is included to verify that your native networking and Python environment are running effectively:
 ```bash
 cd ~/demo_python
 python app.py
 ```
-Then navigate to `http://localhost:5000` in your Termux Firefox browser.
+Open your newly installed Firefox Linux browser (or your Android browser) and navigate to `http://localhost:5000` to see your live server!
 
-## Notes on Performance
+## ⚡ Performance Matrix & Hardware Compatibility
 
-- **Snapdragon Devices**: The script installs the Turnip driver which provides hardware acceleration for Adreno GPUs. This allows heavier desktop environments like KDE to run reasonably well.
-- **Exynos Devices**: Exynos processors use Mali GPUs, which are not currently supported by Turnip. The script will configure a software fallback. For these devices, it is highly recommended to select **XFCE4** or **LXQt** during installation to maintain good performance.
+- **Snapdragon / Adreno GPUs**: This script installs the open-source **Turnip driver**, granting massive hardware acceleration capabilities. Heavy desktop environments like **KDE Plasma** will run exceptionally smooth.
+- **Exynos / Mali GPUs**: Exynos architectures are not supported by Turnip; the script will smartly configure a software fallback (llvmpipe). For Exynos users, we heavily recommend selecting **XFCE4** or **LXQt** for optimal battery life and interaction speed.
 
-## Disclaimer 
+## ⚠️ Disclaimer 
 
-This script is provided for educational purposes and authorized security research only. Do not use the installed tools against targets without explicit permission. The author is not responsible for any misuse.
+This script is built for educational IT purposes and authorized security research only. Do not utilize the offensive tools (e.g., Metasploit) incorporated in this package against targets without their explicit, prior permission. The repository creator claims no responsibility for misuse.
+
+---
+⭐ **Like this project?** Drop a star on GitHub and subscribe to [Tech Jarves](https://youtube.com/techjarves)!
