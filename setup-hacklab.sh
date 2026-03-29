@@ -14,10 +14,7 @@
 #  Author: Tech Jarves
 #  YouTube: https://youtube.com/@TechJarves
 #######################################################
-# Ensure the script is interactive even when piped (e.g., curl | bash)
-if [ ! -t 0 ]; then
-    exec < /dev/tty
-fi
+
 # ============== CONFIGURATION ==============
 TOTAL_STEPS=13
 CURRENT_STEP=0
