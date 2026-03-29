@@ -2,7 +2,7 @@
 
 A script to convert your Samsung Galaxy device into a Linux desktop environment within Termux. It installs your choice of desktop, configures GPU acceleration (optimizing for Snapdragon/Adreno), and sets up essential development and security tools.
 
-**Created by**: Tech Jarves (YouTube)
+**Created by**: [Tech Jarves](https://youtube.com/techjarves)
 
 ## Features
 
@@ -26,12 +26,14 @@ A script to convert your Samsung Galaxy device into a Linux desktop environment 
 Run this single command inside your Termux terminal:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jarvesusaram99/Linux-on-Samsung/main/setup-hacklab.sh | bash
+apt update && apt upgrade -y && apt install curl -y && curl -fsSL https://raw.githubusercontent.com/jarvesusaram99/Linux-on-Samsung/main/setup-hacklab.sh | bash
 ```
 
 Alternatively, you can clone the repository and run it manually:
 
 ```bash
+apt update && apt upgrade -y
+apt install git curl -y
 git clone https://github.com/jarvesusaram99/Linux-on-Samsung.git
 cd Linux-on-Samsung
 chmod +x setup-hacklab.sh
