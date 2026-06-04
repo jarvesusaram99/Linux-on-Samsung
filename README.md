@@ -41,7 +41,6 @@ cd Linux-on-Samsung
 chmod +x setup-hacklab.sh
 ./setup-hacklab.sh
 ```
-
 ## 🖥️ How to Use Your Linux Desktop
 
 After a successful installation, our smart launcher is placed in your home directory.
@@ -62,6 +61,13 @@ cd ~/demo_python
 python app.py
 ```
 Open your newly installed Firefox Linux browser (or your Android browser) and navigate to `http://localhost:5000` to see your live server!
+
+### Adding another Desktop Environment after installation
+
+1. Install the desired environment via Termux: 
+- `pkg install lxqt` (or xfce4, mate, plasma-desktop)
+2. Run `./start-hacklab.sh` – a menu will appear with all installed DEs.
+3. Choose what you want to start.
 
 ## ⚡ Performance Matrix & Hardware Compatibility
 
